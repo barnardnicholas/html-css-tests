@@ -4,6 +4,9 @@ const qfButton = document.getElementById("qfbutton");
 const loopButton = document.getElementById("loopbutton");
 const stopLoopButton = document.getElementById("stoploopbutton");
 const panicButton = document.getElementById("panicbutton");
+const s1Loading = document.getElementById("s1loading");
+const s2Loading = document.getElementById("s2loading");
+const s3Loading = document.getElementById("s3loading");
 
 const allSounds = [];
 
@@ -17,15 +20,21 @@ const sound3 = new Howl({
 
 sound1.once("load", () => {
   allSounds.push(sound1);
+  s1Loading.innerText = "Music Player Sounds have loaded.";
+  sound1Button.className = "stopped";
 });
 sound2.once("load", () => {
   allSounds.push(sound2);
+  s2Loading.innerText = "Quickfire Sounds have loaded.";
+  qfButton.className = "stopped";
 });
 sound3.once("load", () => {
   allSounds.push(sound3);
+  s3Loading.innerText = "Looping Sound has loaded";
+  loopButton.className = "stopped";
 });
 
-console.log("allSounds:", allSounds);
+// console.log("allSounds:", allSounds);
 
 const soundRef = {
   sound1button: sound1
