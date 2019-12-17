@@ -1,0 +1,14 @@
+h1 {
+  font-family: helvetica;
+}
+
+li {
+  padding: 40px 10px 0 10px;
+  display: inline-block;
+  border-width: 2px;
+  border-style: solid;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  vertical-align: middle;
+}
