@@ -3,14 +3,29 @@ const stopButton = document.getElementById("stopbutton");
 const qfButton = document.getElementById("qfbutton");
 const loopButton = document.getElementById("loopbutton");
 const stopLoopButton = document.getElementById("stoploopbutton");
+const panicButton = document.getElementById("panicbutton");
+
+const allSounds = [];
 
 const sound1 = new Howl({ src: ["audio/tyunwin.mp3"] });
-const sound2 = new Howl({ src: ["audio/jump.wav"] });
+const sound2 = new Howl({ src: ["audio/jump.wav"], html5: false });
 const sound3 = new Howl({
   src: ["audio/genloop.wav"],
   loop: true,
   html5: false
 });
+
+sound1.once("load", () => {
+  allSounds.push(sound1);
+});
+sound2.once("load", () => {
+  allSounds.push(sound2);
+});
+sound3.once("load", () => {
+  allSounds.push(sound3);
+});
+
+console.log("allSounds:", allSounds);
 
 const soundRef = {
   sound1button: sound1
@@ -38,7 +53,7 @@ const button1Clicked = clickEvent => {
 };
 
 const stopButtonClicked = clickEvent => {
-  console.log("Stopping all audio...");
+  console.log("Stopping audio...");
   sound1Button.className = "stopped";
   sound1.stop();
 };
@@ -77,6 +92,17 @@ const stopLoopButtonClicked = clickEvent => {
   sound3.stop();
 };
 
+const panicButtonClicked = clickEvent => {
+  console.log("STOPPING ALL SOUNDS...");
+  loopButton.className = "stopped";
+  sound1Button.className = "stopped";
+  qfButton.className - "stopped";
+  allSounds.forEach(sound => {
+    console.log(`Stopping ${sound._src}`);
+    sound.stop();
+  });
+};
+
 // buttons.forEach(button => {
 //   button.addEventListener("click", buttonClicked);
 // });
@@ -86,3 +112,4 @@ stopButton.addEventListener("click", stopButtonClicked);
 qfButton.addEventListener("click", qfButtonClicked);
 loopButton.addEventListener("click", loopButtonClicked);
 stopLoopButton.addEventListener("click", stopLoopButtonClicked);
+panicButton.addEventListener("click", panicButtonClicked);
