@@ -6,7 +6,11 @@ const stopLoopButton = document.getElementById("stoploopbutton");
 
 const sound1 = new Howl({ src: ["audio/tyunwin.mp3"] });
 const sound2 = new Howl({ src: ["audio/jump.wav"] });
-const sound3 = new Howl({ src: ["audio/genloop.wav"], loop: true });
+const sound3 = new Howl({
+  src: ["audio/genloop.wav"],
+  loop: true,
+  html5: false
+});
 
 const soundRef = {
   sound1button: sound1

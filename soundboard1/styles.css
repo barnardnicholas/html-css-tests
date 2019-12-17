@@ -19,13 +19,13 @@ body {
 li {
   font-family: helvetica;
   color: white;
-  padding: 40px 10px 0 10px;
+  padding: 30px 10px 0 10px;
   display: inline-block;
   border-width: 2px;
   border-style: solid;
   border-color: gray;
   width: 100px;
-  height: 100px;
+  height: 50px;
   text-align: center;
   vertical-align: middle;
 }
