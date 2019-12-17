@@ -3,6 +3,7 @@ h1 {
 }
 
 li {
+  font-family: helvetica;
   padding: 40px 10px 0 10px;
   display: inline-block;
   border-width: 2px;

@@ -1,6 +1,5 @@
 const sound1Button = document.getElementById("sound1button");
-const sound2Button = document.getElementById("sound2button");
-const sound3Button = document.getElementById("sound3button");
+const stopButton = document.getElementById("stopbutton");
 
 const sound1 = new Howl({ src: ["audio/tyunwin.mp3"] });
 
@@ -11,7 +10,6 @@ const soundRef = {
 const buttons = document.querySelectorAll("li");
 
 const button1Clicked = clickEvent => {
-  const clickedItem = clickEvent.target;
   let clickedItemClass = clickEvent.target.className;
   const clickedItemId = clickEvent.target.attributes[0].value;
   if (clickedItemClass === "stopped") {
@@ -30,8 +28,16 @@ const button1Clicked = clickEvent => {
   }
 };
 
+const stopButtonClicked = clickEvent => {
+  console.log("Stopping all audio...");
+  sound1Button.className = "stopped";
+  console.dir(sound1Button);
+  sound1.stop();
+};
+
 // buttons.forEach(button => {
 //   button.addEventListener("click", buttonClicked);
 // });
 
 sound1Button.addEventListener("click", button1Clicked);
+stopButton.addEventListener("click", stopButtonClicked);
