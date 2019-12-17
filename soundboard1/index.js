@@ -93,7 +93,7 @@ const stopLoopButtonClicked = clickEvent => {
 };
 
 const panicButtonClicked = clickEvent => {
-  console.log("STOPPING ALL SOUNDS...");
+  console.log("PANIC BUTTON");
   loopButton.className = "stopped";
   sound1Button.className = "stopped";
   qfButton.className - "stopped";
