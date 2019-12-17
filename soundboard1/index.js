@@ -12,9 +12,22 @@ const buttons = document.querySelectorAll("li");
 
 const button1Clicked = clickEvent => {
   const clickedItem = clickEvent.target;
+  let clickedItemClass = clickEvent.target.className;
   const clickedItemId = clickEvent.target.attributes[0].value;
-  console.log(`Playing sound for ${clickedItemId}...`);
-  sound1.play();
+  if (clickedItemClass === "stopped") {
+    console.log(`Playing sound for ${clickedItemId}...`);
+    clickEvent.target.className = "playing";
+    sound1.play();
+    console.dir(clickEvent.target);
+  } else if (clickedItemClass === "playing") {
+    console.log(`Pausing sound for ${clickedItemId}...`);
+    clickEvent.target.className = "paused";
+    sound1.pause();
+  } else if (clickedItemClass === "paused") {
+    console.log(`Unpausing sound for ${clickedItemId}...`);
+    clickEvent.target.className = "playing";
+    sound1.play();
+  }
 };
 
 // buttons.forEach(button => {
