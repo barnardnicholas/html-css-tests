@@ -34,12 +34,6 @@ sound3.once("load", () => {
   loopButton.className = "stopped";
 });
 
-// console.log("allSounds:", allSounds);
-
-const soundRef = {
-  sound1button: sound1
-};
-
 const buttons = document.querySelectorAll("li");
 
 const button1Clicked = clickEvent => {
