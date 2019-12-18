@@ -95,7 +95,8 @@ function playSound(delay) {
   const panAmount = Math.random() * 2 - 1;
   const volumeAmount = Math.random();
   thisSound.volume(volumeAmount);
-  // thisSound.stereo(panAmount);
+  thisSound.stereo(panAmount);
+  console.log(thisSound);
   thisSound.play();
   randomReadout.innerText = `Last-played sound: ${thisSound._src}`;
   console.log(
