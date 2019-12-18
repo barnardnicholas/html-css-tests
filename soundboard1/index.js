@@ -8,6 +8,9 @@ const s1Loading = document.getElementById("s1loading");
 const s2Loading = document.getElementById("s2loading");
 const s3Loading = document.getElementById("s3loading");
 
+const soundscapeButton = document.getElementById("soundgenstart");
+const soundscapeStopButton = document.getElementById("soundgenstop");
+
 const allSounds = [];
 
 const sound1 = new Howl({ src: ["audio/tyunwin.mp3"] });
@@ -104,6 +107,12 @@ const panicButtonClicked = clickEvent => {
     console.log(`Stopping ${sound._src}`);
     sound.stop();
   });
+  alert("Stopped all sounds");
+};
+
+const soundscapeButtonClicked = clickEvent => {
+  console.log("soundscape start");
+  window.location = "sound-gen.html";
 };
 
 // buttons.forEach(button => {
@@ -116,3 +125,4 @@ qfButton.addEventListener("click", qfButtonClicked);
 loopButton.addEventListener("click", loopButtonClicked);
 stopLoopButton.addEventListener("click", stopLoopButtonClicked);
 panicButton.addEventListener("click", panicButtonClicked);
+soundscapeButton.addEventListener("click", soundscapeButtonClicked);
