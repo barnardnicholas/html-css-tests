@@ -54,3 +54,8 @@ li {
 .loading {
   color: grey;
 }
+
+.muted {
+  background-color: goldenrod;
+  color: black;
+}
