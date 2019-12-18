@@ -1,0 +1,56 @@
+h1 {
+  font-family: helvetica;
+  color: white;
+}
+
+h2 {
+  font-family: helvetica;
+  color: white;
+}
+h3 {
+  font-family: helvetica;
+  color: grey;
+}
+
+p {
+  font-family: helvetica;
+  color: grey;
+  padding: 0px 0px 0px 0px;
+}
+body {
+  background-color: black;
+}
+
+li {
+  font-family: helvetica;
+  color: white;
+  padding: 30px 10px 0px 10px;
+  display: inline-block;
+  border-width: 2px;
+  border-style: solid;
+  border-color: gray;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.stopped {
+  background-color: black;
+}
+
+.playing {
+  background-color: green;
+}
+
+.paused {
+  background-color: grey;
+}
+
+.panic {
+  background-color: red;
+}
+
+.loading {
+  color: grey;
+}
