@@ -1,0 +1,27 @@
+body {
+  background-color: black;
+  font-family: helvetica;
+  color: white;
+}
+
+.channel {
+  color: white;
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  display: inline-block;
+  margin: 0px 0px 0px 0px;
+}
+
+#ch_label {
+  padding: 0px 0px 0px 0px;
+}
+
+#ch_fader {
+  padding: 0px 0px 0px 0px;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mixer Render Tests</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./index.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Mixer Render Tests</h1>
+      <div class="channels">
+        <ul class="channel">
+          <li class="ch_label">
+            <p>Channel 1</p>
+          </li>
+          <li id="ch1_fader">
+            <input type="range" id="ch1fader" min="0" max="100" value="70" />
+          </li>
+          <li class="ch_vol">
+            <p id="ch1_vol">70</p>
+          </li>
+        </ul>
+        <ul class="channel">
+          <li class="ch_label">
+            <p>Channel 2</p>
+          </li>
+          <li id="ch2_fader">
+            <input type="range" id="ch2fader" min="0" max="100" value="70" />
+          </li>
+          <li class="ch_vol">
+            <p id="ch2_vol">70</p>
+          </li>
+        </ul>
+      </div>
+    </header>
+  </body>
+</html>
