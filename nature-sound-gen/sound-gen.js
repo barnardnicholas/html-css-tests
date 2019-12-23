@@ -4,13 +4,18 @@ const muteBackground = document.getElementById("mutebg");
 const muteRandom = document.getElementById("muterandom");
 const backgroundReadout = document.getElementById("bgreadout");
 const randomReadout = document.getElementById("randomreadout");
+const bgRange = document.getElementById("bg_range");
+const randRange = document.getElementById("rand_range");
+const bgVol = document.getElementById("bg_vol");
+const randVol = document.getElementById("rand_vol");
+bgVol.innerHTML = bgRange.value;
+randVol.innerHTML = randRange.value;
 
 const bgLoop = new Howl({
   src: ["audio/loops/jungle2.ogg"],
   loop: true,
   html5: false
 });
-console.dir(bgLoop.volume);
 const sound1 = new Howl({
   src: ["audio/bird_calls/Junglebird1.ogg"],
   html5: false,
@@ -92,11 +97,10 @@ function playSound(delay) {
     soundQueue = [...allSounds.sort(() => Math.random() - 0.5)];
   }
   const thisSound = soundQueue.shift();
-  const panAmount = Math.random() * 2 - 1;
-  const volumeAmount = Math.random();
+  const panAmount = Math.random() * 1.5 - 0.75;
+  const volumeAmount = Math.random() * randRange.value;
   thisSound.volume(volumeAmount);
   thisSound.stereo(panAmount);
-  console.log(thisSound);
   thisSound.play();
   randomReadout.innerText = `Last-played sound: ${thisSound._src}`;
   console.log(
@@ -157,12 +161,10 @@ muteBackground.addEventListener("click", clickEvent => {
     console.log("Muting Background sounds...");
     clickEvent.target.className = "muted";
     bgLoop.mute(true);
-    console.dir(clickEvent.target);
   } else if (clickEvent.target.className === "muted") {
     console.log("Un-muting Background sounds...");
     clickEvent.target.className = "unmuted";
     bgLoop.mute(false);
-    console.dir(clickEvent.target);
   }
 });
 
@@ -181,3 +183,18 @@ muteRandom.addEventListener("click", clickEvent => {
     });
   }
 });
+
+bgRange.oninput = () => {
+  bgVol.innerHTML = bgRange.value;
+  bgLoop.volume(bgRange.value / 100);
+};
+randRange.oninput = () => {
+  randVol.innerHTML = randRange.value;
+  sound1.volume(randRange.value / 100);
+  sound2.volume(randRange.value / 100);
+  sound3.volume(randRange.value / 100);
+  sound4.volume(randRange.value / 100);
+  sound5.volume(randRange.value / 100);
+  sound6.volume(randRange.value / 100);
+  sound7.volume(randRange.value / 100);
+};

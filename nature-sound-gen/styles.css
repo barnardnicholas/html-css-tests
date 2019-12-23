@@ -59,3 +59,7 @@ li {
   background-color: goldenrod;
   color: black;
 }
+
+.fader {
+  max-width: 100px;
+}
