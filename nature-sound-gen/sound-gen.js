@@ -11,108 +11,85 @@ const randVol = document.getElementById("rand_vol");
 bgVol.innerHTML = bgRange.value;
 randVol.innerHTML = randRange.value;
 
-const bgLoop = new Howl({
-  src: ["audio/loops/jungle2.ogg"],
-  loop: true,
-  html5: false
-});
-const blackbird = new Howl({
-  src: [
-    "./audio/bird_calls/blackbird-sprite.ogg",
-    "./audio/bird_calls/blackbird-sprite.m4a",
-    "./audio/bird_calls/blackbird-sprite.ac3",
-    "./audio/bird_calls/blackbird-sprite.mp3"
-  ],
-  html5: false,
-  volume: 0.5,
-  sprite: {
-    blackbird1: [0, 3342.2222222222226],
-    blackbird2: [5000, 2602.0861678004535],
-    blackbird3: [9000, 2793.650793650794],
-    blackbird5: [13000, 3789.2063492063494],
-    blackbird6: [18000, 2099.9546485260757],
-    blackbird7: [22000, 2515.011337868479],
-    blackbird8: [26000, 3121.6326530612264],
-    blackbird9: [31000, 2935.873015873014],
-    blackbird10: [35000, 4482.902494331064],
-    blackbird11: [41000, 4009.795918367345],
-    blackbird12: [47000, 3243.537414965985],
-    blackbird13: [52000, 3112.9251700680243],
-    blackbird14: [57000, 4018.5034013605473],
-    blackbird15: [63000, 2950.385487528351],
-    blackbird16: [67000, 2973.605442176876]
-  }
-});
-// const sound2 = new Howl({
-//   src: ["audio/bird_calls/Junglebird2.ogg"],
-//   html5: false,
-//   volume: 0.5
-// });
-// const sound3 = new Howl({
-//   src: ["audio/bird_calls/Junglebird3.ogg"],
-//   html5: false,
-//   volume: 0.5
-// });
-// const sound4 = new Howl({
-//   src: ["audio/bird_calls/Junglebird4.ogg"],
-//   html5: false,
-//   volume: 0.5
-// });
-// const sound5 = new Howl({
-//   src: ["audio/bird_calls/Junglebird5.ogg"],
-//   html5: false,
-//   volume: 0.5
-// });
-// const sound6 = new Howl({
-//   src: ["audio/bird_calls/Junglebird6.ogg"],
-//   html5: false,
-//   volume: 0.5
-// });
-// const sound7 = new Howl({
-//   src: ["audio/bird_calls/Junglebird7.ogg"],
-//   html5: false,
-//   volume: 0.5
-// });
-
-const allSounds = [];
-let blackbirdQueue = [];
+const bgSounds = [];
+const randomSounds = [];
 let loadCounter = 0;
+let pageIsLoading = true;
+
+const soundData = {
+  jungle2: {
+    src: ["audio/loops/jungle2.ogg"],
+    loop: true,
+    html5: false
+  },
+  blackbird: {
+    src: [
+      "./audio/bird_calls/blackbird-sprite.ogg",
+      "./audio/bird_calls/blackbird-sprite.m4a",
+      "./audio/bird_calls/blackbird-sprite.ac3",
+      "./audio/bird_calls/blackbird-sprite.mp3"
+    ],
+    html5: false,
+    volume: 0.5,
+    sprite: {
+      blackbird1: [0, 3342.2222222222226],
+      blackbird2: [5000, 2602.0861678004535],
+      blackbird3: [9000, 2793.650793650794],
+      blackbird5: [13000, 3789.2063492063494],
+      blackbird6: [18000, 2099.9546485260757],
+      blackbird7: [22000, 2515.011337868479],
+      blackbird8: [26000, 3121.6326530612264],
+      blackbird9: [31000, 2935.873015873014],
+      blackbird10: [35000, 4482.902494331064],
+      blackbird11: [41000, 4009.795918367345],
+      blackbird12: [47000, 3243.537414965985],
+      blackbird13: [52000, 3112.9251700680243],
+      blackbird14: [57000, 4018.5034013605473],
+      blackbird15: [63000, 2950.385487528351],
+      blackbird16: [67000, 2973.605442176876]
+    }
+  }
+};
+
+const initSounds = () => {
+  let soundCount = 0;
+  const dataKeys = Object.keys(soundData);
+  loadCounter = dataKeys.length;
+  dataKeys.forEach(key => {
+    // console.dir(soundData[key]);
+    const thisHowl = new Howl(soundData[key]);
+    thisHowl.once("load", () => {
+      soundCount++;
+      console.log(`Loaded ${key}`);
+      const thisObj = { [key]: [thisHowl] };
+      if (soundData[key].loop) {
+        bgSounds.push(thisObj);
+      } else {
+        thisObj[key].push(Object.keys(soundData[key].sprite));
+        randomSounds.push(thisObj);
+      }
+      if (soundCount >= loadCounter) {
+        console.log(`${soundCount} sounds loaded`);
+        pageIsLoading = false;
+      }
+    });
+  });
+};
+
+initSounds();
+
 let soundscapeRunning = false;
 
-blackbird.once("load", () => {
-  for (let key in blackbird._sprite) {
-    blackbirdQueue.push(key);
-  }
-  blackbirdQueue.sort(() => Math.random() - 0.5);
-  loadCounter++;
-  allSounds.push(blackbird);
-});
-// sound2.once("load", () => {
-//   allSounds.push(sound2);
+// blackbird.once("load", () => {
+//   for (let key in blackbird._sprite) {
+//     blackbirdQueue.push(key);
+//   }
+//   blackbirdQueue.sort(() => Math.random() - 0.5);
 //   loadCounter++;
-// });
-// sound3.once("load", () => {
-//   allSounds.push(sound3);
-//   loadCounter++;
-// });
-// sound4.once("load", () => {
-//   allSounds.push(sound4);
-//   loadCounter++;
-// });
-// sound5.once("load", () => {
-//   allSounds.push(sound5);
-//   loadCounter++;
-// });
-// sound6.once("load", () => {
-//   allSounds.push(sound6);
-//   loadCounter++;
-// });
-// sound7.once("load", () => {
-//   allSounds.push(sound7);
-//   loadCounter++;
+//   allSounds.push(blackbird);
 // });
 
-let soundQueue = [...allSounds.sort(() => Math.random() - 0.5)];
+// let soundQueue = [...allSounds.sort(() => Math.random() - 0.5)];
 
 let lastPlayed = ["N/A"];
 
