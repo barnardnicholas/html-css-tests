@@ -16,106 +16,134 @@ const bgLoop = new Howl({
   loop: true,
   html5: false
 });
-const sound1 = new Howl({
-  src: ["audio/bird_calls/Junglebird1.ogg"],
+const blackbird = new Howl({
+  src: [
+    "./audio/bird_calls/blackbird-sprite.ogg",
+    "./audio/bird_calls/blackbird-sprite.m4a",
+    "./audio/bird_calls/blackbird-sprite.ac3",
+    "./audio/bird_calls/blackbird-sprite.mp3"
+  ],
   html5: false,
-  volume: 0.5
+  volume: 0.5,
+  sprite: {
+    blackbird1: [0, 3342.2222222222226],
+    blackbird2: [5000, 2602.0861678004535],
+    blackbird3: [9000, 2793.650793650794],
+    blackbird5: [13000, 3789.2063492063494],
+    blackbird6: [18000, 2099.9546485260757],
+    blackbird7: [22000, 2515.011337868479],
+    blackbird8: [26000, 3121.6326530612264],
+    blackbird9: [31000, 2935.873015873014],
+    blackbird10: [35000, 4482.902494331064],
+    blackbird11: [41000, 4009.795918367345],
+    blackbird12: [47000, 3243.537414965985],
+    blackbird13: [52000, 3112.9251700680243],
+    blackbird14: [57000, 4018.5034013605473],
+    blackbird15: [63000, 2950.385487528351],
+    blackbird16: [67000, 2973.605442176876]
+  }
 });
-const sound2 = new Howl({
-  src: ["audio/bird_calls/Junglebird2.ogg"],
-  html5: false,
-  volume: 0.5
-});
-const sound3 = new Howl({
-  src: ["audio/bird_calls/Junglebird3.ogg"],
-  html5: false,
-  volume: 0.5
-});
-const sound4 = new Howl({
-  src: ["audio/bird_calls/Junglebird4.ogg"],
-  html5: false,
-  volume: 0.5
-});
-const sound5 = new Howl({
-  src: ["audio/bird_calls/Junglebird5.ogg"],
-  html5: false,
-  volume: 0.5
-});
-const sound6 = new Howl({
-  src: ["audio/bird_calls/Junglebird6.ogg"],
-  html5: false,
-  volume: 0.5
-});
-const sound7 = new Howl({
-  src: ["audio/bird_calls/Junglebird7.ogg"],
-  html5: false,
-  volume: 0.5
-});
+// const sound2 = new Howl({
+//   src: ["audio/bird_calls/Junglebird2.ogg"],
+//   html5: false,
+//   volume: 0.5
+// });
+// const sound3 = new Howl({
+//   src: ["audio/bird_calls/Junglebird3.ogg"],
+//   html5: false,
+//   volume: 0.5
+// });
+// const sound4 = new Howl({
+//   src: ["audio/bird_calls/Junglebird4.ogg"],
+//   html5: false,
+//   volume: 0.5
+// });
+// const sound5 = new Howl({
+//   src: ["audio/bird_calls/Junglebird5.ogg"],
+//   html5: false,
+//   volume: 0.5
+// });
+// const sound6 = new Howl({
+//   src: ["audio/bird_calls/Junglebird6.ogg"],
+//   html5: false,
+//   volume: 0.5
+// });
+// const sound7 = new Howl({
+//   src: ["audio/bird_calls/Junglebird7.ogg"],
+//   html5: false,
+//   volume: 0.5
+// });
 
 const allSounds = [];
+let blackbirdQueue = [];
 let loadCounter = 0;
 let soundscapeRunning = false;
 
-sound1.once("load", () => {
-  allSounds.push(sound1);
+blackbird.once("load", () => {
+  for (let key in blackbird._sprite) {
+    blackbirdQueue.push(key);
+  }
+  blackbirdQueue.sort(() => Math.random() - 0.5);
   loadCounter++;
+  allSounds.push(blackbird);
 });
-sound2.once("load", () => {
-  allSounds.push(sound2);
-  loadCounter++;
-});
-sound3.once("load", () => {
-  allSounds.push(sound3);
-  loadCounter++;
-});
-sound4.once("load", () => {
-  allSounds.push(sound4);
-  loadCounter++;
-});
-sound5.once("load", () => {
-  allSounds.push(sound5);
-  loadCounter++;
-});
-sound6.once("load", () => {
-  allSounds.push(sound6);
-  loadCounter++;
-});
-sound7.once("load", () => {
-  allSounds.push(sound7);
-  loadCounter++;
-});
+// sound2.once("load", () => {
+//   allSounds.push(sound2);
+//   loadCounter++;
+// });
+// sound3.once("load", () => {
+//   allSounds.push(sound3);
+//   loadCounter++;
+// });
+// sound4.once("load", () => {
+//   allSounds.push(sound4);
+//   loadCounter++;
+// });
+// sound5.once("load", () => {
+//   allSounds.push(sound5);
+//   loadCounter++;
+// });
+// sound6.once("load", () => {
+//   allSounds.push(sound6);
+//   loadCounter++;
+// });
+// sound7.once("load", () => {
+//   allSounds.push(sound7);
+//   loadCounter++;
+// });
 
 let soundQueue = [...allSounds.sort(() => Math.random() - 0.5)];
 
 let lastPlayed = ["N/A"];
 
-function playSound(delay) {
+function playSound(sound, delay) {
   if (soundscapeRunning === false) {
     return null;
   }
-  if (soundQueue.length === 0) {
-    soundQueue = [...allSounds.sort(() => Math.random() - 0.5)];
-  }
-  const thisSound = soundQueue.shift();
+  const shuffledQueue = [...blackbirdQueue.sort(() => Math.random() - 0.5)];
+  const thisSound = blackbirdQueue.shift();
+  if (shuffledQueue[0] !== blackbirdQueue[blackbirdQueue.length - 1]) {
+    blackbirdQueue.push(shuffledQueue[0]);
+  } else blackbirdQueue.push(shuffledQueue[1]);
   const panAmount = Math.random() * 1.5 - 0.75;
-  const volumeAmount = Math.random() * randRange.value;
-  thisSound.volume(volumeAmount);
-  thisSound.stereo(panAmount);
-  thisSound.play();
-  randomReadout.innerText = `Last-played sound: ${thisSound._src}`;
+  const volumeAmount = Math.random() * 0.6 + (0.4 * randRange.value) / 100;
+  sound.volume(volumeAmount);
+  sound.stereo(panAmount);
+  sound.play(thisSound);
+  randomReadout.innerText = `Last-played sound: ${thisSound}`;
   console.log(
-    `Sound: ${thisSound._src}     Delay: ${delay}ms     Volume: ${volumeAmount}     Pan: ${panAmount}    Last played: ${lastPlayed}`
+    `Sound: ${thisSound}     Delay: ${delay}ms     Volume: ${volumeAmount}     Pan: ${panAmount}    Last played: ${lastPlayed}`
   );
   lastPlayed.shift();
-  lastPlayed.push(thisSound._src);
+  lastPlayed.push(thisSound);
 }
 
-const loop = () => {
+const loop = sound => {
   let interval = Math.round(Math.random() * (5000 - 500)) + 500;
   setTimeout(function() {
-    playSound(interval);
+    playSound(sound, interval);
     if (soundscapeRunning === true) {
-      loop();
+      loop(sound);
     }
   }, interval);
 };
@@ -137,7 +165,8 @@ startButton.addEventListener("click", clickEvent => {
     console.log(`Background Sound: ${bgLoop._src}`);
     bgLoop.play();
     backgroundReadout.innerText = `Background sound: ${bgLoop._src}`;
-    loop();
+    console.log(`Starting loop for ${blackbird}`);
+    loop(blackbird);
   } else if (soundscapeRunning === true) {
     console.log("Soundscape already running.");
     return null;
@@ -190,11 +219,11 @@ bgRange.oninput = () => {
 };
 randRange.oninput = () => {
   randVol.innerHTML = randRange.value;
-  sound1.volume(randRange.value / 100);
-  sound2.volume(randRange.value / 100);
-  sound3.volume(randRange.value / 100);
-  sound4.volume(randRange.value / 100);
-  sound5.volume(randRange.value / 100);
-  sound6.volume(randRange.value / 100);
-  sound7.volume(randRange.value / 100);
+  // blackbird.volume(randRange.value / 100);
+  // sound2.volume(randRange.value / 100);
+  // sound3.volume(randRange.value / 100);
+  // sound4.volume(randRange.value / 100);
+  // sound5.volume(randRange.value / 100);
+  // sound6.volume(randRange.value / 100);
+  // sound7.volume(randRange.value / 100);
 };
