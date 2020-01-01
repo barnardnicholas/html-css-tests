@@ -78,20 +78,8 @@ const initSounds = () => {
 };
 
 initSounds();
-console.log(randomSounds);
 
 let soundscapeRunning = false;
-
-// blackbird.once("load", () => {
-//   for (let key in blackbird._sprite) {
-//     blackbirdQueue.push(key);
-//   }
-//   blackbirdQueue.sort(() => Math.random() - 0.5);
-//   loadCounter++;
-//   allSounds.push(blackbird);
-// });
-
-// let soundQueue = [...allSounds.sort(() => Math.random() - 0.5)];
 
 let lastPlayed = ["N/A"];
 
@@ -141,15 +129,17 @@ startButton.addEventListener("click", clickEvent => {
     clickEvent.target.className = "playing";
     Howler.volume(1);
     muteBackground.className = "unmuted";
+    const bgList = [];
     bgSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
+      bgList.push(thisSound);
       sound[thisSound].howl.mute(false);
       console.log(`Starting loop for ${thisSound}`);
       sound[thisSound].howl.play();
     });
+    backgroundReadout.innerText = `Background sound: ${bgList.toString()}`;
+    console.log(`Background Sound: ${bgList.toString()}`);
     muteRandom.className = "unmuted";
-    // console.log(`Background Sound: ${bgLoop._src}`);
-    // backgroundReadout.innerText = `Background sound: ${bgLoop._src}`;
     randomSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(false);
