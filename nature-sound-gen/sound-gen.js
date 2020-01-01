@@ -56,16 +56,17 @@ const initSounds = () => {
   const dataKeys = Object.keys(soundData);
   loadCounter = dataKeys.length;
   dataKeys.forEach(key => {
-    // console.dir(soundData[key]);
     const thisHowl = new Howl(soundData[key]);
     thisHowl.once("load", () => {
       soundCount++;
       console.log(`Loaded ${key}`);
-      const thisObj = { [key]: [thisHowl] };
+      const thisObj = { [key]: { howl: thisHowl } };
       if (soundData[key].loop) {
         bgSounds.push(thisObj);
       } else {
-        thisObj[key].push(Object.keys(soundData[key].sprite));
+        thisObj[key].sprites = Object.keys(soundData[key].sprite);
+        thisObj[key].playlist = Object.keys(soundData[key].sprite);
+        thisObj[key].playlist.sort(() => Math.random() - 0.5);
         randomSounds.push(thisObj);
       }
       if (soundCount >= loadCounter) {
@@ -77,6 +78,7 @@ const initSounds = () => {
 };
 
 initSounds();
+console.log(randomSounds);
 
 let soundscapeRunning = false;
 
@@ -93,32 +95,37 @@ let soundscapeRunning = false;
 
 let lastPlayed = ["N/A"];
 
-function playSound(sound, delay) {
+const playRandomSound = (soundObj, delay) => {
   if (soundscapeRunning === false) {
     return null;
   }
-  const shuffledQueue = [...blackbirdQueue.sort(() => Math.random() - 0.5)];
-  const thisSound = blackbirdQueue.shift();
-  if (shuffledQueue[0] !== blackbirdQueue[blackbirdQueue.length - 1]) {
-    blackbirdQueue.push(shuffledQueue[0]);
-  } else blackbirdQueue.push(shuffledQueue[1]);
+  const soundKey = Object.keys(soundObj)[0];
+  const thisHowl = soundObj[soundKey].howl;
+  const thisPlaylist = soundObj[soundKey].playlist;
+  const thisSoundSprite = thisPlaylist.shift();
+  const shuffledPlaylist = [...thisPlaylist.sort(() => Math.random() - 0.5)];
+  if (shuffledPlaylist[0] !== thisPlaylist[thisPlaylist.length - 1]) {
+    thisPlaylist.push(shuffledPlaylist[0]);
+  } else {
+    thisPlaylist.push(shuffledPlaylist[1]);
+  }
   const panAmount = Math.random() * 1.5 - 0.75;
   const volumeAmount = Math.random() * 0.6 + (0.4 * randRange.value) / 100;
-  sound.volume(volumeAmount);
-  sound.stereo(panAmount);
-  sound.play(thisSound);
-  randomReadout.innerText = `Last-played sound: ${thisSound}`;
+  thisHowl.volume(volumeAmount);
+  thisHowl.stereo(panAmount);
+  thisHowl.play(thisSoundSprite);
+  randomReadout.innerText = `Last-played sound: ${thisSoundSprite}`;
   console.log(
-    `Sound: ${thisSound}     Delay: ${delay}ms     Volume: ${volumeAmount}     Pan: ${panAmount}    Last played: ${lastPlayed}`
+    `Sound: ${thisSoundSprite}     Delay: ${delay}ms     Volume: ${volumeAmount}     Pan: ${panAmount}    Last played: ${lastPlayed[0]}`
   );
   lastPlayed.shift();
-  lastPlayed.push(thisSound);
-}
+  lastPlayed.push(thisSoundSprite);
+};
 
 const loop = sound => {
   let interval = Math.round(Math.random() * (5000 - 500)) + 500;
   setTimeout(function() {
-    playSound(sound, interval);
+    playRandomSound(sound, interval);
     if (soundscapeRunning === true) {
       loop(sound);
     }
@@ -133,17 +140,21 @@ startButton.addEventListener("click", clickEvent => {
     soundscapeRunning = true;
     clickEvent.target.className = "playing";
     Howler.volume(1);
-    bgLoop.mute(false);
     muteBackground.className = "unmuted";
-    allSounds.forEach(sound => {
-      sound.mute(false);
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
+      console.log(`Starting loop for ${thisSound}`);
+      sound[thisSound].howl.play();
     });
     muteRandom.className = "unmuted";
-    console.log(`Background Sound: ${bgLoop._src}`);
-    bgLoop.play();
-    backgroundReadout.innerText = `Background sound: ${bgLoop._src}`;
-    console.log(`Starting loop for ${blackbird}`);
-    loop(blackbird);
+    // console.log(`Background Sound: ${bgLoop._src}`);
+    // backgroundReadout.innerText = `Background sound: ${bgLoop._src}`;
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
+      loop(sound);
+    });
   } else if (soundscapeRunning === true) {
     console.log("Soundscape already running.");
     return null;
@@ -157,7 +168,11 @@ stopButton.addEventListener("click", clickEvent => {
   muteRandom.className = "unmuted";
   soundscapeRunning = false;
   Howler.volume(0);
-  bgLoop.stop();
+  bgSounds.forEach(sound => {
+    const thisSound = Object.keys(sound)[0];
+    sound[thisSound].howl.mute(false);
+    sound[thisSound].howl.stop();
+  });
   backgroundReadout.innerText = "Background sound: -";
   randomReadout.innerText = "Last-played sound: -";
 });
@@ -166,11 +181,17 @@ muteBackground.addEventListener("click", clickEvent => {
   if (clickEvent.target.className === "unmuted") {
     console.log("Muting Background sounds...");
     clickEvent.target.className = "muted";
-    bgLoop.mute(true);
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(true);
+    });
   } else if (clickEvent.target.className === "muted") {
     console.log("Un-muting Background sounds...");
     clickEvent.target.className = "unmuted";
-    bgLoop.mute(false);
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
+    });
   }
 });
 
@@ -178,29 +199,31 @@ muteRandom.addEventListener("click", clickEvent => {
   if (clickEvent.target.className === "unmuted") {
     console.log("Muting Random sounds...");
     clickEvent.target.className = "muted";
-    allSounds.forEach(sound => {
-      sound.mute(true);
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(true);
     });
   } else if (clickEvent.target.className === "muted") {
     console.log("Un-muting Random sounds...");
     clickEvent.target.className = "unmuted";
-    allSounds.forEach(sound => {
-      sound.mute(false);
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
     });
   }
 });
 
 bgRange.oninput = () => {
   bgVol.innerHTML = bgRange.value;
-  bgLoop.volume(bgRange.value / 100);
+  bgSounds.forEach(sound => {
+    const thisSound = Object.keys(sound)[0];
+    sound[thisSound].howl.volume(bgRange.value / 100);
+  });
 };
 randRange.oninput = () => {
   randVol.innerHTML = randRange.value;
-  // blackbird.volume(randRange.value / 100);
-  // sound2.volume(randRange.value / 100);
-  // sound3.volume(randRange.value / 100);
-  // sound4.volume(randRange.value / 100);
-  // sound5.volume(randRange.value / 100);
-  // sound6.volume(randRange.value / 100);
-  // sound7.volume(randRange.value / 100);
+  randomSounds.forEach(sound => {
+    const thisSound = Object.keys(sound)[0];
+    sound[thisSound].howl.volume(randRange.value / 100);
+  });
 };
