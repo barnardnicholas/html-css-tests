@@ -53,7 +53,6 @@ const playRandomSound = (soundObj, delay) => {
   if (channelPan === 0) {
     panAmount = Math.random() * 0.3 - 0.15;
   }
-  console.log(panAmount);
   const channelVolume = soundObj[soundKey].channelVolume;
   const volumeAmount = channelVolume - Math.random() * channelVolume;
   thisHowl.volume(volumeAmount);

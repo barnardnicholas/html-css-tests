@@ -56,3 +56,16 @@ ul {
 .ch_unsolo {
   background-color: unset;
 }
+
+.ch_volsect {
+  display: inline-block;
+  width: 120px;
+}
+.ch_pansect {
+  display: inline-block;
+  width: 130px;
+}
+.ch_freqsect {
+  display: inline-block;
+  width: 120px;
+}

@@ -73,7 +73,9 @@ playButton.addEventListener("click", clickEvent => {
     soundscapeRunning = true;
     clickEvent.target.className = "t_playing";
     Howler.volume(1);
-    muteBackground.className = "t_unmuted";
+    if (muteBackground.className === "t_muted") {
+      muteBackground.className = "t_unmuted";
+    }
     const bgList = [];
     bgSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
@@ -84,7 +86,7 @@ playButton.addEventListener("click", clickEvent => {
     });
     backgroundReadout.innerText = `Background sound: ${bgList.toString()}`;
     console.log(`Background Sound: ${bgList.toString()}`);
-    muteRandom.className = "unmuted";
+    muteRandom.className = "t_unmuted";
     randomSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(false);
