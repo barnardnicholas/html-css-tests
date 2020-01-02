@@ -1,17 +1,48 @@
 body {
   font-family: Helvetica;
+  white-space: nowrap;
+}
+
+.t_playing {
+  background: green;
+}
+
+.t_notplaying {
+  background: unset;
+}
+
+.t_unmuted {
+  background-color: unset;
+}
+
+.t_muted {
+  background-color: darkorange;
+}
+
+.ch_fader {
+  width: 60px;
+}
+
+.ch_freq {
+  width: 60px;
+}
+
+.ch_pan {
+  width: 60px;
 }
 
 ul {
   list-style-type: none;
+  padding: 10px 0px;
 }
 
 .ch_label {
-  width: 500px;
+  display: inline-block;
+  width: 80px;
 }
 
 .ch_mute {
-  background-color: red;
+  background-color: darkorange;
 }
 
 .ch_solo {
@@ -19,9 +50,9 @@ ul {
 }
 
 .ch_unmute {
-  background-color: orange;
+  background-color: unset;
 }
 
 .ch_unsolo {
-  background-color: yellow;
+  background-color: unset;
 }

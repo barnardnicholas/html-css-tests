@@ -13,8 +13,21 @@ const jungleChannel = document.getElementById("jungle");
 const jungleFader = document.getElementById("jungle_range");
 const jungleVol = document.getElementById("jungle_vol");
 jungleVol.innerHTML = jungleFader.value;
+const junglePanFader = document.getElementById("jungle_panfad");
+const junglePan = document.getElementById("jungle_pan");
+junglePan.innerHTML = junglePanFader.value;
 const jungleMute = document.getElementById("jungle_mute");
 const jungleSolo = document.getElementById("jungle_solo");
+
+const swampChannel = document.getElementById("swamp");
+const swampFader = document.getElementById("swamp_range");
+const swampVol = document.getElementById("swamp_vol");
+swampVol.innerHTML = swampFader.value;
+const swampPanFader = document.getElementById("swamp_panfad");
+const swampPan = document.getElementById("swamp_pan");
+swampPan.innerHTML = swampPanFader.value;
+const swampMute = document.getElementById("swamp_mute");
+const swampSolo = document.getElementById("swamp_solo");
 
 const blackbirdChannel = document.getElementById("blackbird");
 const blackbirdFader = document.getElementById("blackbird_range");
@@ -52,9 +65,9 @@ playButton.addEventListener("click", clickEvent => {
   if (soundscapeRunning === false) {
     console.log("Starting Soundscape...");
     soundscapeRunning = true;
-    clickEvent.target.className = "playing";
+    clickEvent.target.className = "t_playing";
     Howler.volume(1);
-    muteBackground.className = "unmuted";
+    muteBackground.className = "t_unmuted";
     const bgList = [];
     bgSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
@@ -94,16 +107,16 @@ stopButton.addEventListener("click", clickEvent => {
 });
 
 muteBackground.addEventListener("click", clickEvent => {
-  if (clickEvent.target.className === "unmuted") {
+  if (clickEvent.target.className === "t_unmuted") {
     console.log("Muting Background sounds...");
-    clickEvent.target.className = "muted";
+    clickEvent.target.className = "t_muted";
     bgSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(true);
     });
-  } else if (clickEvent.target.className === "muted") {
+  } else if (clickEvent.target.className === "t_muted") {
     console.log("Un-muting Background sounds...");
-    clickEvent.target.className = "unmuted";
+    clickEvent.target.className = "t_unmuted";
     bgSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(false);
@@ -112,16 +125,16 @@ muteBackground.addEventListener("click", clickEvent => {
 });
 
 muteRandom.addEventListener("click", clickEvent => {
-  if (clickEvent.target.className === "unmuted") {
+  if (clickEvent.target.className === "t_unmuted") {
     console.log("Muting Random sounds...");
-    clickEvent.target.className = "muted";
+    clickEvent.target.className = "t_muted";
     randomSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(true);
     });
-  } else if (clickEvent.target.className === "muted") {
+  } else if (clickEvent.target.className === "t_muted") {
     console.log("Un-muting Random sounds...");
-    clickEvent.target.className = "unmuted";
+    clickEvent.target.className = "t_unmuted";
     randomSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(false);
@@ -139,6 +152,42 @@ jungleFader.oninput = () => {
   });
   thisSound.jungle.channelVolume = jungleFader.value / 100;
   thisSound.jungle.howl.volume(jungleFader.value / 100);
+};
+
+junglePanFader.oninput = () => {
+  junglePan.innerHTML = junglePanFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("jungle")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.jungle.channelPan = junglePanFader.value / 100;
+  thisSound.jungle.howl.stereo(junglePanFader.value / 100);
+};
+
+swampPanFader.oninput = () => {
+  swampPan.innerHTML = swampPanFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("swamp")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.swamp.channelPan = swampPanFader.value / 100;
+  thisSound.swamp.howl.stereo(swampPanFader.value / 100);
+};
+
+swampFader.oninput = () => {
+  swampVol.innerHTML = swampFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("swamp")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.swamp.channelVolume = swampFader.value / 100;
+  thisSound.swamp.howl.volume(swampFader.value / 100);
 };
 
 blackbirdFader.oninput = () => {
@@ -207,6 +256,30 @@ jungleMute.addEventListener("click", event => {
   }
 });
 
+swampMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Swamp...");
+    swampChannel.className = "muted";
+    event.target.className = "ch_mute";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "swamp") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Swamp...");
+    swampChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "swamp") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+  }
+});
+
 blackbirdMute.addEventListener("click", event => {
   if (event.target.className === "ch_unmute") {
     console.log("Muting Blackbird...");
@@ -251,6 +324,134 @@ beeMute.addEventListener("click", event => {
       if (thisSound === "bee") {
         sound[thisSound].howl.mute(false);
       }
+    });
+  }
+});
+
+jungleSolo.addEventListener("click", event => {
+  if (event.target.className === "ch_unsolo") {
+    console.log("Soloing Jungle...");
+    jungleChannel.className = "soloed";
+    event.target.className = "ch_solo";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "jungle") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(true);
+    });
+  } else if (event.target.className === "ch_solo") {
+    console.log("Un-muting Jungle...");
+    jungleChannel.className = "unmuted";
+    event.target.className = "ch_unsolo";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "jungle") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
+    });
+  }
+});
+
+swampSolo.addEventListener("click", event => {
+  if (event.target.className === "ch_unsolo") {
+    console.log("Soloing swamp...");
+    swampChannel.className = "soloed";
+    event.target.className = "ch_solo";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "swamp") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(true);
+    });
+  } else if (event.target.className === "ch_solo") {
+    console.log("Un-muting swamp...");
+    swampChannel.className = "unmuted";
+    event.target.className = "ch_unsolo";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "swamp") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
+    });
+  }
+});
+
+blackbirdSolo.addEventListener("click", event => {
+  if (event.target.className === "ch_unsolo") {
+    console.log("Soloing Blackbird...");
+    blackbirdChannel.className = "soloed";
+    event.target.className = "ch_solo";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "blackbird") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(true);
+    });
+  } else if (event.target.className === "ch_solo") {
+    console.log("Un-soloing Blackbird...");
+    blackbirdChannel.className = "unmuted";
+    event.target.className = "ch_unsolo";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "blackbird") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
+    });
+  }
+});
+
+beeSolo.addEventListener("click", event => {
+  if (event.target.className === "ch_unsolo") {
+    console.log("Soloing Bee...");
+    beeChannel.className = "soloed";
+    event.target.className = "ch_solo";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "bee") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(true);
+    });
+  } else if (event.target.className === "ch_solo") {
+    console.log("Un-soloing Bee...");
+    beeChannel.className = "unmuted";
+    event.target.className = "ch_unsolo";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound !== "bee") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      sound[thisSound].howl.mute(false);
     });
   }
 });

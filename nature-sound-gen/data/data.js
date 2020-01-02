@@ -7,7 +7,8 @@ const soundData = {
       loop: true,
       html5: false
     },
-    channelVolume: 0.7
+    channelVolume: 0.7,
+    channelPan: 0
   },
   crickets: {
     name: "Crickets",
@@ -17,7 +18,19 @@ const soundData = {
       loop: true,
       html5: false
     },
-    channelVolume: 0.7
+    channelVolume: 0.7,
+    channelPan: 0
+  },
+  swamp: {
+    name: "Swamp",
+    howl: {
+      src: ["../audio/loops/Swamp.ogg"],
+      volume: 0.7,
+      loop: true,
+      html5: false
+    },
+    channelVolume: 0.7,
+    channelPan: 0
   },
   blackbird: {
     name: "Blackbird",
@@ -109,6 +122,6 @@ const soundData = {
 };
 
 const scenarioData = {
-  jungle: ["jungle", "blackbird", "bee"],
+  jungle: ["jungle", "swamp", "blackbird", "bee"],
   nightforest: ["crickets", "owl"]
 };

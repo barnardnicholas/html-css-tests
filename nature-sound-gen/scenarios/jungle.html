@@ -19,10 +19,10 @@
     </header>
 
     <section id="transport">
-      <button id="t_playpause">Play</button>
-      <button id="t_stop">Stop</button>
-      <button id="t_mutebg">Mute Background</button>
-      <button id="t_muterandom">Mute Random</button>
+      <button id="t_playpause" class="t_notplaying">Play</button>
+      <button id="t_stop" class="t_stopbutton">Stop</button>
+      <button id="t_mutebg" class="t_unmuted">Mute Background</button>
+      <button id="t_muterandom" class="t_unmuted">Mute Random</button>
     </section>
 
     <section id="channels">
@@ -33,7 +33,9 @@
           </h3>
         </li>
         <li id="jungle" class="unmuted">
-          <label id="jungle_label" class="ch_label">Jungle</label>
+          <div class="ch_label">
+            <label id="jungle_label">Jungle</label>
+          </div>
           <button id="jungle_mute" class="ch_unmute">M</button>
           <button id="jungle_solo" class="ch_unsolo">S</button>
           <label class="vol_label">Vol</label>
@@ -46,6 +48,44 @@
             value="70"
           />
           <label id="jungle_vol" value="70">70</label>
+          <label class="pan_label">Pan</label>
+          <input
+            type="range"
+            class="ch_pan"
+            id="jungle_panfad"
+            min="-100"
+            max="100"
+            value="0"
+          />
+          <label id="jungle_pan" value="50">50</label>
+        </li>
+        <li id="swamp" class="unmuted">
+          <div class="ch_label">
+            <label id="swamp_label">Swamp</label>
+          </div>
+          <button id="swamp_mute" class="ch_unmute">M</button>
+          <button id="swamp_solo" class="ch_unsolo">S</button>
+          <label class="vol_label">Vol</label>
+          <input
+            type="range"
+            class="ch_fader"
+            id="swamp_range"
+            min="0"
+            max="100"
+            value="70"
+          />
+          <label id="swamp_vol" value="70">70</label>
+          <label class="pan_label">Pan</label>
+          <input
+            type="range"
+            class="ch_pan"
+            id="swamp_panfad"
+            min="-100"
+            max="100"
+            value="0"
+          />
+          <label id="swamp_pan" value="50">50</label>
+        </li>
         </li>
         <li>
           <h3>
@@ -53,10 +93,12 @@
           </h3>
         </li>
         <li id="blackbird" class="unmuted">
-          <label class="ch_label">Blackbird</label>
+          <div class="ch_label">
+            <label>Blackbird</label>
+          </div>
           <button id="blackbird_mute" class="ch_unmute">M</button>
           <button id="blackbird_solo" class="ch_unsolo">S</button>
-          <label class="ch_label">Vol</label>
+          <label class="vol_label">Vol</label>
           <input
             type="range"
             class="ch_fader"
@@ -78,10 +120,12 @@
           <label id="blackbird_freq" value="50">50</label>
         </li>
         <li id="bee" class="unmuted">
-          <label class="ch_label">Bee</label>
+          <div class="ch_label">
+            <label>Bee</label>
+          </div>
           <button id="bee_mute" class="ch_unmute">M</button>
           <button id="bee_solo" class="ch_unsolo">S</button>
-          <label class="ch_label">Vol</label>
+          <label class="vol_label">Vol</label>
           <input
             type="range"
             class="ch_fader"

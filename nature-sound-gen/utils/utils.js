@@ -11,6 +11,7 @@ const initSounds = soundsArr => {
       const thisObj = { [sound]: { howl: thisHowl } };
       if (soundData[sound].howl.loop) {
         thisObj[sound].channelVolume = soundData[sound].channelVolume;
+        thisObj[sound].channelPan = soundData[sound].channelPan;
         bgSounds.push(thisObj);
       } else {
         thisObj[sound].sprites = Object.keys(soundData[sound].howl.sprite);
