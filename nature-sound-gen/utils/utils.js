@@ -19,6 +19,7 @@ const initSounds = soundsArr => {
         thisObj[sound].playlist.sort(() => Math.random() - 0.5);
         thisObj[sound].channelVolume = soundData[sound].channelVolume;
         thisObj[sound].channelFrequency = soundData[sound].channelFrequency;
+        thisObj[sound].channelPan = soundData[sound].channelPan;
         randomSounds.push(thisObj);
       }
       if (soundCount >= loadCounter) {
@@ -37,7 +38,7 @@ const playRandomSound = (soundObj, delay) => {
     return null;
   }
   const soundKey = Object.keys(soundObj)[0];
-  // console.log("this sound object:", soundObj[soundKey].volume);
+  // console.log("this sound object:", soundObj[soundKey]);
   const thisHowl = soundObj[soundKey].howl;
   const thisPlaylist = soundObj[soundKey].playlist;
   const thisSoundSprite = thisPlaylist.shift();
@@ -47,7 +48,12 @@ const playRandomSound = (soundObj, delay) => {
   } else {
     thisPlaylist.push(shuffledPlaylist[1]);
   }
-  const panAmount = Math.random() * 1.5 - 0.75;
+  const channelPan = soundObj[soundKey].channelPan;
+  let panAmount = channelPan - Math.random() * channelPan;
+  if (channelPan === 0) {
+    panAmount = Math.random() * 0.3 - 0.15;
+  }
+  console.log(panAmount);
   const channelVolume = soundObj[soundKey].channelVolume;
   const volumeAmount = channelVolume - Math.random() * channelVolume;
   thisHowl.volume(volumeAmount);

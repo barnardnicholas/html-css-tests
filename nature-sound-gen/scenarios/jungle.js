@@ -33,6 +33,9 @@ const blackbirdChannel = document.getElementById("blackbird");
 const blackbirdFader = document.getElementById("blackbird_range");
 const blackbirdVol = document.getElementById("blackbird_vol");
 blackbirdVol.innerHTML = blackbirdFader.value;
+const blackbirdPanFader = document.getElementById("blackbird_panfad");
+const blackbirdPan = document.getElementById("blackbird_pan");
+blackbirdPan.innerHTML = blackbirdPanFader.value;
 const blackbirdFreqFader = document.getElementById("blackbird_freqfad");
 const blackbirdFreq = document.getElementById("blackbird_freq");
 blackbirdFreq.innerHTML = blackbirdFreqFader.value;
@@ -43,6 +46,9 @@ const beeChannel = document.getElementById("bee");
 const beeFader = document.getElementById("bee_range");
 const beeVol = document.getElementById("bee_vol");
 beeVol.innerHTML = beeFader.value;
+const beePanFader = document.getElementById("bee_panfad");
+const beePan = document.getElementById("bee_pan");
+beePan.innerHTML = beePanFader.value;
 const beeFreqFader = document.getElementById("bee_freqfad");
 const beeFreq = document.getElementById("bee_freq");
 beeFreq.innerHTML = beeFreqFader.value;
@@ -142,96 +148,6 @@ muteRandom.addEventListener("click", clickEvent => {
   }
 });
 
-jungleFader.oninput = () => {
-  jungleVol.innerHTML = jungleFader.value;
-  let thisSound = {};
-  bgSounds.forEach(sound => {
-    if (sound.hasOwnProperty("jungle")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.jungle.channelVolume = jungleFader.value / 100;
-  thisSound.jungle.howl.volume(jungleFader.value / 100);
-};
-
-junglePanFader.oninput = () => {
-  junglePan.innerHTML = junglePanFader.value;
-  let thisSound = {};
-  bgSounds.forEach(sound => {
-    if (sound.hasOwnProperty("jungle")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.jungle.channelPan = junglePanFader.value / 100;
-  thisSound.jungle.howl.stereo(junglePanFader.value / 100);
-};
-
-swampPanFader.oninput = () => {
-  swampPan.innerHTML = swampPanFader.value;
-  let thisSound = {};
-  bgSounds.forEach(sound => {
-    if (sound.hasOwnProperty("swamp")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.swamp.channelPan = swampPanFader.value / 100;
-  thisSound.swamp.howl.stereo(swampPanFader.value / 100);
-};
-
-swampFader.oninput = () => {
-  swampVol.innerHTML = swampFader.value;
-  let thisSound = {};
-  bgSounds.forEach(sound => {
-    if (sound.hasOwnProperty("swamp")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.swamp.channelVolume = swampFader.value / 100;
-  thisSound.swamp.howl.volume(swampFader.value / 100);
-};
-
-blackbirdFader.oninput = () => {
-  blackbirdVol.innerHTML = blackbirdFader.value;
-  let thisSound = {};
-  randomSounds.forEach(sound => {
-    if (sound.hasOwnProperty("blackbird")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.blackbird.channelVolume = blackbirdFader.value / 100;
-};
-blackbirdFreqFader.oninput = () => {
-  blackbirdFreq.innerHTML = blackbirdFreqFader.value;
-  let thisSound = {};
-  randomSounds.forEach(sound => {
-    if (sound.hasOwnProperty("blackbird")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.blackbird.channelFrequency = blackbirdFreqFader.value / 100;
-};
-
-beeFader.oninput = () => {
-  beeVol.innerHTML = beeFader.value;
-  let thisSound = {};
-  randomSounds.forEach(sound => {
-    if (sound.hasOwnProperty("bee")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.bee.channelVolume = beeFader.value / 100;
-};
-beeFreqFader.oninput = () => {
-  beeFreq.innerHTML = beeFreqFader.value;
-  let thisSound = {};
-  randomSounds.forEach(sound => {
-    if (sound.hasOwnProperty("bee")) {
-      thisSound = sound;
-    }
-  });
-  thisSound.bee.channelFrequency = beeFreqFader.value / 100;
-};
-
 jungleMute.addEventListener("click", event => {
   if (event.target.className === "ch_unmute") {
     console.log("Muting Jungle...");
@@ -250,78 +166,6 @@ jungleMute.addEventListener("click", event => {
     bgSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       if (thisSound === "jungle") {
-        sound[thisSound].howl.mute(false);
-      }
-    });
-  }
-});
-
-swampMute.addEventListener("click", event => {
-  if (event.target.className === "ch_unmute") {
-    console.log("Muting Swamp...");
-    swampChannel.className = "muted";
-    event.target.className = "ch_mute";
-    bgSounds.forEach(sound => {
-      const thisSound = Object.keys(sound)[0];
-      if (thisSound === "swamp") {
-        sound[thisSound].howl.mute(true);
-      }
-    });
-  } else if (event.target.className === "ch_mute") {
-    console.log("Un-muting Swamp...");
-    swampChannel.className = "unmuted";
-    event.target.className = "ch_unmute";
-    bgSounds.forEach(sound => {
-      const thisSound = Object.keys(sound)[0];
-      if (thisSound === "swamp") {
-        sound[thisSound].howl.mute(false);
-      }
-    });
-  }
-});
-
-blackbirdMute.addEventListener("click", event => {
-  if (event.target.className === "ch_unmute") {
-    console.log("Muting Blackbird...");
-    blackbirdChannel.className = "muted";
-    event.target.className = "ch_mute";
-    randomSounds.forEach(sound => {
-      const thisSound = Object.keys(sound)[0];
-      if (thisSound === "blackbird") {
-        sound[thisSound].howl.mute(true);
-      }
-    });
-  } else if (event.target.className === "ch_mute") {
-    console.log("Un-muting Blackbird...");
-    blackbirdChannel.className = "unmuted";
-    event.target.className = "ch_unmute";
-    randomSounds.forEach(sound => {
-      const thisSound = Object.keys(sound)[0];
-      if (thisSound === "blackbird") {
-        sound[thisSound].howl.mute(false);
-      }
-    });
-  }
-});
-
-beeMute.addEventListener("click", event => {
-  if (event.target.className === "ch_unmute") {
-    console.log("Muting Bee...");
-    beeChannel.className = "muted";
-    event.target.className = "ch_mute";
-    randomSounds.forEach(sound => {
-      const thisSound = Object.keys(sound)[0];
-      if (thisSound === "bee") {
-        sound[thisSound].howl.mute(true);
-      }
-    });
-  } else if (event.target.className === "ch_mute") {
-    console.log("Un-muting Bee...");
-    beeChannel.className = "unmuted";
-    event.target.className = "ch_unmute";
-    randomSounds.forEach(sound => {
-      const thisSound = Object.keys(sound)[0];
-      if (thisSound === "bee") {
         sound[thisSound].howl.mute(false);
       }
     });
@@ -360,6 +204,54 @@ jungleSolo.addEventListener("click", event => {
   }
 });
 
+jungleFader.oninput = () => {
+  jungleVol.innerHTML = jungleFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("jungle")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.jungle.channelVolume = jungleFader.value / 100;
+  thisSound.jungle.howl.volume(jungleFader.value / 100);
+};
+
+junglePanFader.oninput = () => {
+  junglePan.innerHTML = junglePanFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("jungle")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.jungle.channelPan = junglePanFader.value / 100;
+  thisSound.jungle.howl.stereo(junglePanFader.value / 100);
+};
+
+swampMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Swamp...");
+    swampChannel.className = "muted";
+    event.target.className = "ch_mute";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "swamp") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Swamp...");
+    swampChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "swamp") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+  }
+});
+
 swampSolo.addEventListener("click", event => {
   if (event.target.className === "ch_unsolo") {
     console.log("Soloing swamp...");
@@ -388,6 +280,54 @@ swampSolo.addEventListener("click", event => {
     randomSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(false);
+    });
+  }
+});
+
+swampFader.oninput = () => {
+  swampVol.innerHTML = swampFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("swamp")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.swamp.channelVolume = swampFader.value / 100;
+  thisSound.swamp.howl.volume(swampFader.value / 100);
+};
+
+swampPanFader.oninput = () => {
+  swampPan.innerHTML = swampPanFader.value;
+  let thisSound = {};
+  bgSounds.forEach(sound => {
+    if (sound.hasOwnProperty("swamp")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.swamp.channelPan = swampPanFader.value / 100;
+  thisSound.swamp.howl.stereo(swampPanFader.value / 100);
+};
+
+blackbirdMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Blackbird...");
+    blackbirdChannel.className = "muted";
+    event.target.className = "ch_mute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "blackbird") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Blackbird...");
+    blackbirdChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "blackbird") {
+        sound[thisSound].howl.mute(false);
+      }
     });
   }
 });
@@ -424,6 +364,64 @@ blackbirdSolo.addEventListener("click", event => {
   }
 });
 
+blackbirdFader.oninput = () => {
+  blackbirdVol.innerHTML = blackbirdFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("blackbird")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.blackbird.channelVolume = blackbirdFader.value / 100;
+};
+
+blackbirdPanFader.oninput = () => {
+  blackbirdPan.innerHTML = blackbirdPanFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("blackbird")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.blackbird.channelPan = blackbirdPanFader.value / 100;
+  thisSound.blackbird.howl.stereo(blackbirdPanFader.value / 100);
+};
+
+blackbirdFreqFader.oninput = () => {
+  blackbirdFreq.innerHTML = blackbirdFreqFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("blackbird")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.blackbird.channelFrequency = blackbirdFreqFader.value / 100;
+};
+
+beeMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Bee...");
+    beeChannel.className = "muted";
+    event.target.className = "ch_mute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "bee") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Bee...");
+    beeChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "bee") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+  }
+});
+
 beeSolo.addEventListener("click", event => {
   if (event.target.className === "ch_unsolo") {
     console.log("Soloing Bee...");
@@ -455,3 +453,37 @@ beeSolo.addEventListener("click", event => {
     });
   }
 });
+
+beeFader.oninput = () => {
+  beeVol.innerHTML = beeFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("bee")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.bee.channelVolume = beeFader.value / 100;
+};
+
+beePanFader.oninput = () => {
+  beePan.innerHTML = beePanFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("bee")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.bee.channelPan = beePanFader.value / 100;
+  thisSound.bee.howl.stereo(beePanFader.value / 100);
+};
+
+beeFreqFader.oninput = () => {
+  beeFreq.innerHTML = beeFreqFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("bee")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.bee.channelFrequency = beeFreqFader.value / 100;
+};

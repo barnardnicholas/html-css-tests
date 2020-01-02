@@ -62,7 +62,8 @@ const soundData = {
       }
     },
     channelVolume: 0.7,
-    channelFrequency: 0.5
+    channelFrequency: 0.5,
+    channelPan: 0
   },
   owl: {
     name: "Owl",
@@ -95,7 +96,8 @@ const soundData = {
       }
     },
     channelVolume: 0.7,
-    channelFrequency: 0.5
+    channelFrequency: 0.5,
+    channelPan: 0
   },
   bee: {
     name: "Bee",
@@ -117,7 +119,8 @@ const soundData = {
       }
     },
     channelVolume: 0.7,
-    channelFrequency: 0.5
+    channelFrequency: 0.5,
+    channelPan: 0
   }
 };
 
