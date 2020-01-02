@@ -1,0 +1,14 @@
+body {
+  font-family: Helvetica;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.ch_label {
+  width: 500px;
+}
+
+.ch_mute {
+}

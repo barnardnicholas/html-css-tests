@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sound Generator</title>
+    <link rel="stylesheet" href="./jungle.css" />
+    <script src="../src/howler.core.js" defer></script>
+    <script src="../src/plugins/howler.spatial.js" defer></script>
+    <script src="../utils/utils.js" defer></script>
+    <script src="../data/data.js" defer></script>
+    <script src="./jungle.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Jungle Soundscape</h1>
+      <p>Howler.js audio tests by Nick Barnard - December 2019</p>
+    </header>
+
+    <section id="transport">
+      <button id="t_playpause">Play</button>
+      <button id="t_stop">Stop</button>
+      <button id="t_mutebg">Mute Background</button>
+      <button id="t_muterandom">Mute Random</button>
+    </section>
+
+    <section id="channels">
+      <ul>
+        <li>
+          <h3>
+            Background Sounds
+          </h3>
+        </li>
+        <li>
+          <label class="ch_label">Jungle</label>
+          <button class="ch_mute">M</button>
+          <button class="ch_solo">S</button>
+          <input
+            type="range"
+            class="ch_fader"
+            id="jungle_range"
+            min="0"
+            max="100"
+            value="70"
+          />
+          <label id="jungle_vol" value="70">70</label>
+        </li>
+        <li>
+          <h3>
+            Random Sounds
+          </h3>
+        </li>
+        <li>
+          <label class="ch_label">Blackbird</label>
+          <button class="ch_mute">M</button>
+          <button class="ch_solo">S</button>
+          <input
+            type="range"
+            class="ch_fader"
+            id="blackbird_range"
+            min="0"
+            max="100"
+            value="70"
+          />
+          <label id="blackbird_vol" value="70">70</label>
+        </li>
+      </ul>
+    </section>
+
+    <p id="bgreadout">Background sound: -</p>
+    <p id="randomreadout">Last-played sound: -</p>
+  </body>
+</html>
