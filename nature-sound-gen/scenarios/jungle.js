@@ -9,13 +9,32 @@ const muteRandom = document.getElementById("t_muterandom");
 const backgroundReadout = document.getElementById("bgreadout");
 const randomReadout = document.getElementById("randomreadout");
 
+const jungleChannel = document.getElementById("jungle");
 const jungleFader = document.getElementById("jungle_range");
 const jungleVol = document.getElementById("jungle_vol");
 jungleVol.innerHTML = jungleFader.value;
+const jungleMute = document.getElementById("jungle_mute");
+const jungleSolo = document.getElementById("jungle_solo");
 
+const blackbirdChannel = document.getElementById("blackbird");
 const blackbirdFader = document.getElementById("blackbird_range");
 const blackbirdVol = document.getElementById("blackbird_vol");
 blackbirdVol.innerHTML = blackbirdFader.value;
+const blackbirdFreqFader = document.getElementById("blackbird_freqfad");
+const blackbirdFreq = document.getElementById("blackbird_freq");
+blackbirdFreq.innerHTML = blackbirdFreqFader.value;
+const blackbirdMute = document.getElementById("blackbird_mute");
+const blackbirdSolo = document.getElementById("blackbird_solo");
+
+const beeChannel = document.getElementById("bee");
+const beeFader = document.getElementById("bee_range");
+const beeVol = document.getElementById("bee_vol");
+beeVol.innerHTML = beeFader.value;
+const beeFreqFader = document.getElementById("bee_freqfad");
+const beeFreq = document.getElementById("bee_freq");
+beeFreq.innerHTML = beeFreqFader.value;
+const beeMute = document.getElementById("bee_mute");
+const beeSolo = document.getElementById("bee_solo");
 
 let pageIsLoading = true;
 
@@ -50,7 +69,7 @@ playButton.addEventListener("click", clickEvent => {
     randomSounds.forEach(sound => {
       const thisSound = Object.keys(sound)[0];
       sound[thisSound].howl.mute(false);
-      loop(sound, sound[thisSound].volume);
+      loop(sound);
     });
   } else if (soundscapeRunning === true) {
     console.log("Soundscape already running.");
@@ -118,7 +137,8 @@ jungleFader.oninput = () => {
       thisSound = sound;
     }
   });
-  thisSound.jungle.volume = jungleFader.value / 100;
+  thisSound.jungle.channelVolume = jungleFader.value / 100;
+  thisSound.jungle.howl.volume(jungleFader.value / 100);
 };
 
 blackbirdFader.oninput = () => {
@@ -129,5 +149,108 @@ blackbirdFader.oninput = () => {
       thisSound = sound;
     }
   });
-  thisSound.blackbird.volume = blackbirdFader.value / 100;
+  thisSound.blackbird.channelVolume = blackbirdFader.value / 100;
 };
+blackbirdFreqFader.oninput = () => {
+  blackbirdFreq.innerHTML = blackbirdFreqFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("blackbird")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.blackbird.channelFrequency = blackbirdFreqFader.value / 100;
+};
+
+beeFader.oninput = () => {
+  beeVol.innerHTML = beeFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("bee")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.bee.channelVolume = beeFader.value / 100;
+};
+beeFreqFader.oninput = () => {
+  beeFreq.innerHTML = beeFreqFader.value;
+  let thisSound = {};
+  randomSounds.forEach(sound => {
+    if (sound.hasOwnProperty("bee")) {
+      thisSound = sound;
+    }
+  });
+  thisSound.bee.channelFrequency = beeFreqFader.value / 100;
+};
+
+jungleMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Jungle...");
+    jungleChannel.className = "muted";
+    event.target.className = "ch_mute";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "jungle") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Jungle...");
+    jungleChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    bgSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "jungle") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+  }
+});
+
+blackbirdMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Blackbird...");
+    blackbirdChannel.className = "muted";
+    event.target.className = "ch_mute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "blackbird") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Blackbird...");
+    blackbirdChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "blackbird") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+  }
+});
+
+beeMute.addEventListener("click", event => {
+  if (event.target.className === "ch_unmute") {
+    console.log("Muting Bee...");
+    beeChannel.className = "muted";
+    event.target.className = "ch_mute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "bee") {
+        sound[thisSound].howl.mute(true);
+      }
+    });
+  } else if (event.target.className === "ch_mute") {
+    console.log("Un-muting Bee...");
+    beeChannel.className = "unmuted";
+    event.target.className = "ch_unmute";
+    randomSounds.forEach(sound => {
+      const thisSound = Object.keys(sound)[0];
+      if (thisSound === "bee") {
+        sound[thisSound].howl.mute(false);
+      }
+    });
+  }
+});

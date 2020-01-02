@@ -32,10 +32,11 @@
             Background Sounds
           </h3>
         </li>
-        <li>
-          <label class="ch_label">Jungle</label>
-          <button class="ch_mute">M</button>
-          <button class="ch_solo">S</button>
+        <li id="jungle" class="unmuted">
+          <label id="jungle_label" class="ch_label">Jungle</label>
+          <button id="jungle_mute" class="ch_unmute">M</button>
+          <button id="jungle_solo" class="ch_unsolo">S</button>
+          <label class="vol_label">Vol</label>
           <input
             type="range"
             class="ch_fader"
@@ -51,10 +52,11 @@
             Random Sounds
           </h3>
         </li>
-        <li>
+        <li id="blackbird" class="unmuted">
           <label class="ch_label">Blackbird</label>
-          <button class="ch_mute">M</button>
-          <button class="ch_solo">S</button>
+          <button id="blackbird_mute" class="ch_unmute">M</button>
+          <button id="blackbird_solo" class="ch_unsolo">S</button>
+          <label class="ch_label">Vol</label>
           <input
             type="range"
             class="ch_fader"
@@ -64,6 +66,41 @@
             value="70"
           />
           <label id="blackbird_vol" value="70">70</label>
+          <label class="freq_label">Freq</label>
+          <input
+            type="range"
+            class="ch_freq"
+            id="blackbird_freqfad"
+            min="0"
+            max="100"
+            value="50"
+          />
+          <label id="blackbird_freq" value="50">50</label>
+        </li>
+        <li id="bee" class="unmuted">
+          <label class="ch_label">Bee</label>
+          <button id="bee_mute" class="ch_unmute">M</button>
+          <button id="bee_solo" class="ch_unsolo">S</button>
+          <label class="ch_label">Vol</label>
+          <input
+            type="range"
+            class="ch_fader"
+            id="bee_range"
+            min="0"
+            max="100"
+            value="70"
+          />
+          <label id="bee_vol" value="70">70</label>
+          <label class="freq_label">Freq</label>
+          <input
+            type="range"
+            class="ch_freq"
+            id="bee_freqfad"
+            min="0"
+            max="100"
+            value="50"
+          />
+          <label id="bee_freq" value="50">50</label>
         </li>
       </ul>
     </section>

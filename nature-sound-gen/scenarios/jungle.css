@@ -11,4 +11,17 @@ ul {
 }
 
 .ch_mute {
+  background-color: red;
+}
+
+.ch_solo {
+  background-color: red;
+}
+
+.ch_unmute {
+  background-color: orange;
+}
+
+.ch_unsolo {
+  background-color: yellow;
 }

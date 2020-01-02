@@ -6,7 +6,8 @@ const soundData = {
       volume: 0.7,
       loop: true,
       html5: false
-    }
+    },
+    channelVolume: 0.7
   },
   crickets: {
     name: "Crickets",
@@ -15,7 +16,8 @@ const soundData = {
       volume: 0.7,
       loop: true,
       html5: false
-    }
+    },
+    channelVolume: 0.7
   },
   blackbird: {
     name: "Blackbird",
@@ -45,7 +47,9 @@ const soundData = {
         blackbird15: [63000, 2950.385487528351],
         blackbird16: [67000, 2973.605442176876]
       }
-    }
+    },
+    channelVolume: 0.7,
+    channelFrequency: 0.5
   },
   owl: {
     name: "Owl",
@@ -76,11 +80,35 @@ const soundData = {
         Owl2b: [70000, 3401.3378684807235],
         Owl2c: [75000, 1150.839002267574]
       }
-    }
+    },
+    channelVolume: 0.7,
+    channelFrequency: 0.5
+  },
+  bee: {
+    name: "Bee",
+    howl: {
+      src: [
+        "../audio/insects/bee-sprite.ogg",
+        "../audio/insects/bee-sprite.m4a",
+        "../audio/insects/bee-sprite.ac3",
+        "../audio/insects/bee-sprite.mp3"
+      ],
+      html5: false,
+      volume: 0.7,
+      sprite: {
+        "bee 1": [0, 2117.369614512472],
+        "bee 2": [4000, 2224.7619047619055],
+        "bee 3": [8000, 811.2471655328796],
+        "bee 4": [10000, 988.2993197278918],
+        "bee 5": [12000, 2143.492063492063]
+      }
+    },
+    channelVolume: 0.7,
+    channelFrequency: 0.5
   }
 };
 
 const scenarioData = {
-  jungle: ["jungle", "blackbird"],
+  jungle: ["jungle", "blackbird", "bee"],
   nightforest: ["crickets", "owl"]
 };

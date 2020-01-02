@@ -10,13 +10,14 @@ const initSounds = soundsArr => {
       soundCount++;
       const thisObj = { [sound]: { howl: thisHowl } };
       if (soundData[sound].howl.loop) {
-        thisObj[sound].volume = 0.7;
+        thisObj[sound].channelVolume = soundData[sound].channelVolume;
         bgSounds.push(thisObj);
       } else {
         thisObj[sound].sprites = Object.keys(soundData[sound].howl.sprite);
         thisObj[sound].playlist = Object.keys(soundData[sound].howl.sprite);
         thisObj[sound].playlist.sort(() => Math.random() - 0.5);
-        thisObj[sound].volume = 0.7;
+        thisObj[sound].channelVolume = soundData[sound].channelVolume;
+        thisObj[sound].channelFrequency = soundData[sound].channelFrequency;
         randomSounds.push(thisObj);
       }
       if (soundCount >= loadCounter) {
@@ -30,11 +31,12 @@ const initSounds = soundsArr => {
   return { bgSounds: bgSounds, randomSounds: randomSounds };
 };
 
-const playRandomSound = (soundObj, soundVol, delay) => {
+const playRandomSound = (soundObj, delay) => {
   if (soundscapeRunning === false) {
     return null;
   }
   const soundKey = Object.keys(soundObj)[0];
+  // console.log("this sound object:", soundObj[soundKey].volume);
   const thisHowl = soundObj[soundKey].howl;
   const thisPlaylist = soundObj[soundKey].playlist;
   const thisSoundSprite = thisPlaylist.shift();
@@ -45,26 +47,29 @@ const playRandomSound = (soundObj, soundVol, delay) => {
     thisPlaylist.push(shuffledPlaylist[1]);
   }
   const panAmount = Math.random() * 1.5 - 0.75;
-  const channelVolume = parseInt(blackbirdVol.innerHTML) / 100;
-  const volumeAmount = channelVolume - Math.random() * 0.2;
-  console.log(volumeAmount);
+  const channelVolume = soundObj[soundKey].channelVolume;
+  const volumeAmount = channelVolume - Math.random() * channelVolume;
   thisHowl.volume(volumeAmount);
   thisHowl.stereo(panAmount);
   thisHowl.play(thisSoundSprite);
   randomReadout.innerText = `Last-played sound: ${thisSoundSprite}`;
   console.log(
-    `Sound: ${thisSoundSprite}     Delay: ${delay}ms     Volume: ${volumeAmount}     Pan: ${panAmount}    Last played: ${lastPlayed[0]}`
+    `Sound: ${thisSoundSprite}     Delay: ${delay}ms     Volume: ${volumeAmount}    ChannelVolume:${channelVolume}     Pan: ${panAmount}    Last played: ${lastPlayed[0]}`
   );
   lastPlayed.shift();
   lastPlayed.push(thisSoundSprite);
 };
 
-const loop = (sound, vol) => {
-  let interval = Math.round(Math.random() * (5000 - 500)) + 500;
+const loop = sound => {
+  const soundKey = Object.keys(sound)[0];
+  const channelFreq = sound[soundKey].channelFrequency * 10000;
+  // let interval = Math.round(Math.random() * (5000 - 500)) + 500;
+  let intervalOffset = Math.random() * channelFreq;
+  let interval = channelFreq + intervalOffset;
   setTimeout(function() {
-    playRandomSound(sound, vol, interval);
+    playRandomSound(sound, interval);
     if (soundscapeRunning === true) {
-      loop(sound, vol);
+      loop(sound, interval);
     }
   }, interval);
 };
