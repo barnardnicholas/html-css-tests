@@ -60,6 +60,7 @@ ul {
 .ch_volsect {
   display: inline-block;
   width: 120px;
+  padding: 0px 0px 0px 10px;
 }
 .ch_pansect {
   display: inline-block;

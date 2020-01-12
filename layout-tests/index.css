@@ -1,0 +1,57 @@
+body {
+  font-family: helvetica;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: [start] 40px [col2] 50px [col3] auto [col4] 50px [col5] 40px [end];
+  grid-template-rows: [start] 25% [head-end] 100px [search-end] auto [last-line];
+}
+
+#header {
+  display: flex;
+  color: blue;
+  border-width: 1px;
+  border-style: solid;
+  align-content: center;
+  justify-content: center;
+  grid-column-start: start;
+  grid-column-end: head-end;
+  grid-row-start: start;
+  grid-row-end: end;
+}
+
+#searchbar {
+  display: flex;
+  color: green;
+  border-width: 1px;
+  border-style: solid;
+  align-content: center;
+  justify-content: center;
+  justify-self: center;
+  grid-column-start: col2;
+  grid-column-end: col5;
+  grid-row-start: head-end;
+  grid-row-end: search-end;
+}
+
+#articles {
+  display: flex;
+  font-family: "Courier New";
+  color: red;
+  border-width: 1px;
+  border-style: solid;
+  align-content: center;
+  justify-content: center;
+  grid-column-start: col3;
+  grid-column-end: col4;
+  grid-row-start: search-end;
+  grid-row-end: end;
+}
+
+.articlecard {
+}
