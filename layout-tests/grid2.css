@@ -1,12 +1,43 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono:300");
 
+@font-face {
+  font-family: "Hellovetica";
+  src: url("./fonts/hellovetica-webfont.eot");
+  src: url("./fonts/hellovetica-webfont.eot") format("embedded-opentype"),
+    url("./fonts/hellovetica-webfont.woff") format("woff"),
+    url("./fonts/hellovetica-webfont.ttf") format("truetype"),
+    url("./fonts/hellovetica-webfont.svg") format("svg");
+}
+
+@font-face {
+  font-family: "CubicFive";
+  src: url("./fonts/cubicfive10-webfont.eot");
+  src: url("./fonts/cubicfive10-webfont.eot") format("embedded-opentype"),
+    url("./fonts/cubicfive10-webfont.woff") format("woff"),
+    url("./fonts/cubicfive10-webfont.ttf") format("truetype"),
+    url("./fonts/cubicfive10-webfont.svg") format("svg");
+}
+
+@font-face {
+  font-family: "Pixel Six";
+  src: url("./fonts/pixelsix00-webfont.eot");
+  src: url("./fonts/pixelsix00-webfont.eot") format("embedded-opentype"),
+    url("./fonts/pixelsix00-webfont.woff") format("woff"),
+    url("./fonts/pixelsix00-webfont.ttf") format("truetype"),
+    url("./fonts/pixelsix00-webfont.svg") format("svg");
+}
+
 body {
-  font-family: Roboto Mono;
+  font-family: Hellovetica;
   background-color: grey;
   padding: 50px;
   color: #0ee027;
   background-color: black;
   text-shadow: #0ee027 0 0 0.8rem;
+  align-content: center;
+  justify-content: center;
+  text-align: left;
+  text-justify: center;
 }
 
 @keyframes flicker {
@@ -89,6 +120,7 @@ body {
 }
 
 #container {
+  width: 1190px;
   border-color: #0ee027;
   border-style: solid;
   border-width: 2px;
@@ -113,25 +145,38 @@ body {
 }
 
 h1 {
+  font-family: Hellovetica;
   margin: 0px;
   font-size: 72px;
   padding: 20px;
 }
 
 h2 {
+  font-family: "Hellovetica";
+  font-size: 1.2em;
   padding: 10px;
   margin: 0px;
 }
 
+h3 {
+  font-family: Hellovetica;
+}
+
+h4 {
+  font-family: Hellovetica;
+}
+
 p {
-  font-size: 12px;
+  font-family: "Pixel Six";
+  font-size: 16px;
 }
 
 #outer-grid {
   margin: 8px;
   display: grid;
-  grid-template-rows: 200px 70px 1fr;
+  grid-template-rows: 220px 70px 1fr;
   grid-gap: 8px;
+  height: 1fr;
 }
 #outer-grid > div {
   /* padding: 8px; */
@@ -140,6 +185,10 @@ p {
 #header {
   border-style: solid;
   border-width: 2px;
+}
+
+#logo {
+  margin: 8px;
 }
 
 #navbar {
@@ -162,6 +211,7 @@ p {
   border-style: solid;
   border-width: 2px;
   padding: 12px;
+  height: 1fr;
 }
 
 #articles {
