@@ -10,27 +10,37 @@
 }
 
 @font-face {
-  font-family: "CubicFive";
-  src: url("./fonts/cubicfive10-webfont.eot");
-  src: url("./fonts/cubicfive10-webfont.eot") format("embedded-opentype"),
-    url("./fonts/cubicfive10-webfont.woff") format("woff"),
-    url("./fonts/cubicfive10-webfont.ttf") format("truetype"),
-    url("./fonts/cubicfive10-webfont.svg") format("svg");
+  font-family: "Fipps";
+  src: url("./fonts/fipps-regular-webfont.eot");
+  src: url("./fonts/fipps-regular-webfont.eot") format("embedded-opentype"),
+    url("./fonts/fipps-regular-webfont.woff") format("woff"),
+    url("./fonts/fipps-regular-webfont.ttf") format("truetype"),
+    url("./fonts/fipps-regular-webfont.svg") format("svg");
 }
 
 @font-face {
-  font-family: "Pixel Six";
-  src: url("./fonts/pixelsix00-webfont.eot");
-  src: url("./fonts/pixelsix00-webfont.eot") format("embedded-opentype"),
-    url("./fonts/pixelsix00-webfont.woff") format("woff"),
-    url("./fonts/pixelsix00-webfont.ttf") format("truetype"),
-    url("./fonts/pixelsix00-webfont.svg") format("svg");
+  font-family: "8-bit-pusab";
+  src: url("./fonts/8-bit-pusab-webfont.eot");
+  src: url("./fonts/8-bit-pusab-webfont.eot") format("embedded-opentype"),
+    url("./fonts/8-bit-pusab-webfont.woff") format("woff"),
+    url("./fonts/8-bit-pusab-webfont.ttf") format("truetype"),
+    url("./fonts/8-bit-pusab-webfont.svg") format("svg");
+}
+
+@font-face {
+  font-family: "Minecraftia";
+  src: url("./fonts/minecraftia-regular-webfont.eot");
+  src: url("./fonts/minecraftia-regular-webfont.eot")
+      format("embedded-opentype"),
+    url("./fonts/minecraftia-regular-webfont.woff") format("woff"),
+    url("./fonts/minecraftia-regular-webfont.ttf") format("truetype"),
+    url("./fonts/minecraftia-regular-webfont.svg") format("svg");
 }
 
 body {
-  font-family: Hellovetica;
+  font-family: Minecraftia;
   background-color: grey;
-  padding: 50px;
+  padding: 30px;
   color: #0ee027;
   background-color: black;
   text-shadow: #0ee027 0 0 0.8rem;
@@ -38,6 +48,8 @@ body {
   justify-content: center;
   text-align: left;
   text-justify: center;
+  align-items: center;
+  justify-items: center;
 }
 
 @keyframes flicker {
@@ -145,30 +157,30 @@ body {
 }
 
 h1 {
-  font-family: Hellovetica;
+  font-family: Fipps;
   margin: 0px;
   font-size: 72px;
   padding: 20px;
 }
 
 h2 {
-  font-family: "Hellovetica";
+  font-family: 8-bit-pusab;
   font-size: 1.2em;
   padding: 10px;
   margin: 0px;
 }
 
 h3 {
-  font-family: Hellovetica;
+  font-family: 8-bit-pusab;
+  font-size: 24px;
 }
 
 h4 {
-  font-family: Hellovetica;
+  font-family: 8-bit-pusab;
+  font-size: 20px;
 }
 
 p {
-  font-family: "Pixel Six";
-  font-size: 16px;
 }
 
 #outer-grid {
@@ -197,13 +209,13 @@ p {
   padding: 12px;
 }
 
-#viewport {
+#main {
   display: grid;
   grid-template-columns: 150px 1fr;
   grid-gap: 5px;
   padding: 0px;
 }
-#viewport > div {
+#main > div {
   /* padding: 8px; */
 }
 
@@ -214,7 +226,7 @@ p {
   height: 1fr;
 }
 
-#articles {
+#viewport {
   display: grid;
   grid-gap: 8px;
 }
